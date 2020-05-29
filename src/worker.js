@@ -1,11 +1,11 @@
 import jsQR from '../node_modules/jsqr-es6/dist/jsQR.js';
 
 let inversionAttempts = 'dontInvert';
-let grayscaleWeights = {
+let grayscaleWeights  = {
     // weights for quick luma integer approximation (https://en.wikipedia.org/wiki/YUV#Full_swing_for_BT.601)
-    red: 77,
-    green: 150,
-    blue: 29,
+    red                    : 77,
+    green                  : 150,
+    blue                   : 29,
     useIntegerApproximation: true,
 };
 
@@ -32,23 +32,23 @@ self.onmessage = event => {
 
 function decode(data) {
     const rgbaData = data['data'];
-    const width = data['width'];
-    const height = data['height'];
-    const result = jsQR(rgbaData, width, height, {
+    const width    = data['width'];
+    const height   = data['height'];
+    const result   = jsQR(rgbaData, width, height, {
         inversionAttempts: inversionAttempts,
-        greyScaleWeights: grayscaleWeights,
+        greyScaleWeights : grayscaleWeights,
     });
     self.postMessage({
         type: 'qrResult',
-        data: result? result.data : null,
+        data: result || null,
     });
 }
 
 function setGrayscaleWeights(data) {
     // update grayscaleWeights in a closure compiler compatible fashion
-    grayscaleWeights.red = data['red'];
-    grayscaleWeights.green = data['green'];
-    grayscaleWeights.blue = data['blue'];
+    grayscaleWeights.red                     = data['red'];
+    grayscaleWeights.green                   = data['green'];
+    grayscaleWeights.blue                    = data['blue'];
     grayscaleWeights.useIntegerApproximation = data['useIntegerApproximation'];
 }
 
