@@ -39,8 +39,9 @@ function decode(data) {
         greyScaleWeights : grayscaleWeights,
     });
     self.postMessage({
-        type: 'qrResult',
-        data: result || null,
+        type    : 'qrResult',
+        data    : result ? result.data : null,
+        scanMeta: result ? result : null,
     });
 }
 
